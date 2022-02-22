@@ -80,7 +80,7 @@ public class FirstFragment extends Fragment {
                 layout.addView(inputNome);
 
                 final EditText inputQuota = new EditText(getContext());
-                inputQuota.setInputType(InputType.TYPE_CLASS_NUMBER);
+                inputQuota.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 inputQuota.setHint("Quanto avrai speso?");
                 layout.addView(inputQuota);
 
@@ -126,6 +126,7 @@ public class FirstFragment extends Fragment {
 
         TableLayout table = binding.tableLayout;
         table.removeAllViews();
+        Double totMoney = 0.0;
 
         for(Coppia c : a){
             //TableRow row = (TableRow)LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, null);
@@ -138,6 +139,7 @@ public class FirstFragment extends Fragment {
 
             TextView textview2 = new TextView(getActivity().getApplicationContext());
             textview2.setText(String.valueOf(c.quota)+" €");
+            totMoney += c.quota;
             textview2.setTextSize(22);
             row.addView(textview2);
 
@@ -146,6 +148,24 @@ public class FirstFragment extends Fragment {
             //binding.attribName.setText(c.nome);
             //binding.attribValue.setText(String.valueOf(c.quota));
         }
+
+        //aggiungi riga del totale
+        TableRow rowblank = new TableRow(getActivity().getApplicationContext());
+        TextView textview0 = new TextView(getActivity().getApplicationContext());
+        textview0.setText("\n________________\n\n");
+        rowblank.addView(textview0);
+        table.addView(rowblank, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        TableRow row = new TableRow(getActivity().getApplicationContext());
+        TextView textview1 = new TextView(getActivity().getApplicationContext());
+        textview1.setText("Tot. = ");
+        textview1.setTextSize(24);
+        row.addView(textview1);
+        TextView textview2 = new TextView(getActivity().getApplicationContext());
+        textview2.setText(String.valueOf(totMoney)+" €");
+        textview2.setTextSize(24);
+        row.addView(textview2);
+        table.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         table.requestLayout();
 

@@ -19,12 +19,14 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.contiseparapp.databinding.FragmentSecondBinding;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SecondFragment extends Fragment {
 
     private FragmentSecondBinding binding;
     private ArrayList<Coppia> risultati;
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
     public View onCreateView(
@@ -98,9 +100,18 @@ public class SecondFragment extends Fragment {
 
         TableLayout table = binding.tableLayout;
         table.removeAllViews();
+        Double totMoney = 0.0;
 
         for(Coppia c : risultati){
             //TableRow row = (TableRow)LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, null);
+
+            if(c.nome == "monetine: "){
+                TableRow rowblank = new TableRow(getActivity().getApplicationContext());
+                TextView textview0 = new TextView(getActivity().getApplicationContext());
+                textview0.setText("\n________________\n");
+                rowblank.addView(textview0);
+                table.addView(rowblank, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
             TableRow row = new TableRow(getActivity().getApplicationContext());
 
             TextView textview1 = new TextView(getActivity().getApplicationContext());
@@ -109,7 +120,8 @@ public class SecondFragment extends Fragment {
             row.addView(textview1);
 
             TextView textview2 = new TextView(getActivity().getApplicationContext());
-            textview2.setText(String.valueOf(c.quota)+" €");
+            textview2.setText(df.format(c.quota)+" €");
+            totMoney += c.quota;
             textview2.setTextSize(22);
             row.addView(textview2);
 
@@ -118,6 +130,24 @@ public class SecondFragment extends Fragment {
             //binding.attribName.setText(c.nome);
             //binding.attribValue.setText(String.valueOf(c.quota));
         }
+
+        //aggiungi riga del totale
+        TableRow rowblank = new TableRow(getActivity().getApplicationContext());
+        TextView textview0 = new TextView(getActivity().getApplicationContext());
+        textview0.setText("\n________________\n\n");
+        rowblank.addView(textview0);
+        table.addView(rowblank, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        TableRow row = new TableRow(getActivity().getApplicationContext());
+        TextView textview1 = new TextView(getActivity().getApplicationContext());
+        textview1.setText("Tot. = ");
+        textview1.setTextSize(24);
+        row.addView(textview1);
+        TextView textview2 = new TextView(getActivity().getApplicationContext());
+        textview2.setText(df.format(totMoney)+" €");
+        textview2.setTextSize(24);
+        row.addView(textview2);
+        table.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         table.requestLayout();
 
