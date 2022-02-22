@@ -56,8 +56,8 @@ public class SecondFragment extends Fragment {
 
         // Set up the input
         final EditText inputConto = new EditText(getContext());
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        inputConto.setInputType(InputType.TYPE_CLASS_NUMBER);
+        // Specify the type of input expected;
+        inputConto.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         inputConto.setHint("totale conto");
         layout.addView(inputConto);
 
@@ -71,7 +71,7 @@ public class SecondFragment extends Fragment {
                 String conto1 = inputConto.getText().toString();
 
                 if(!conto1.equals("")) {
-                    Integer conto = Integer.parseInt(conto1);
+                    Double conto = Double.parseDouble(conto1);
                     risultati = GuestList.calcRes(conto);
                     VisualizzaRisultati();
                 }

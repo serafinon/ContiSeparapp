@@ -95,7 +95,7 @@ public class FirstFragment extends Fragment {
                         String quota1 = inputQuota.getText().toString();
 
                         if(!nome.equals("") && !quota1.equals("")) {
-                            Integer quota = Integer.parseInt(quota1);
+                            Double quota = Double.parseDouble(quota1);
                             a = GuestList.addGuest(nome, quota);
                             aggiornaTab();
                         }

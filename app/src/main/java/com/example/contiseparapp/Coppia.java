@@ -2,9 +2,9 @@ package com.example.contiseparapp;
 
 public class Coppia {
     public String nome;
-    public float quota;
+    public Double quota;
 
-    public Coppia(String nome, Integer quota){
+    public Coppia(String nome, Double quota){
         this.nome=nome;
         this.quota=quota;
     }
