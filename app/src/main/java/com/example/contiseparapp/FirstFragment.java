@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
@@ -129,61 +130,20 @@ public class FirstFragment extends Fragment {
         TableLayout table = binding.tableLayout;
         table.removeAllViews();
         Double totMoney = 0.0;
+        FragmentActivity fa = getActivity();
 
         for(Coppia c : Guests.getList()){
-            //TableRow row = (TableRow)LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, null);
-            TableRow row = new TableRow(getActivity().getApplicationContext());
-
-            TextView textview1 = new TextView(getActivity().getApplicationContext());
-            textview1.setText(c.nome);
-            textview1.setTextSize(22);
-            row.addView(textview1);
-
-            TextView textview2 = new TextView(getActivity().getApplicationContext());
-            textview2.setText(df.format(c.quota)+" €");
+            Utility.aggiungiRigaTab(fa, table, c.nome, df.format(c.quota)+" €", 22);
             totMoney += c.quota;
-            textview2.setTextSize(22);
-            row.addView(textview2);
-
-            table.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            //binding.attribName.setText(c.nome);
-            //binding.attribValue.setText(String.valueOf(c.quota));
         }
 
         //aggiungi riga del totale
-        TableRow rowblank = new TableRow(getActivity().getApplicationContext());
-        TextView textview0 = new TextView(getActivity().getApplicationContext());
-        textview0.setText("\n________________\n\n");
-        rowblank.addView(textview0);
-        table.addView(rowblank, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        TableRow row = new TableRow(getActivity().getApplicationContext());
-        TextView textview1 = new TextView(getActivity().getApplicationContext());
-        textview1.setText("Tot.");
-        textview1.setTextSize(24);
-        row.addView(textview1);
-        TextView textview2 = new TextView(getActivity().getApplicationContext());
-        textview2.setText(df.format(totMoney)+" €");
-        textview2.setTextSize(24);
-        row.addView(textview2);
-        table.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        Utility.aggiungiRigaBlank(fa, table);
+        Utility.aggiungiRigaTab(fa, table, "Tot.", df.format(totMoney)+" €", 24);
 
         table.requestLayout();
 
+    }
 
-    }
-/*
-    TableLayout table = binding.tableLayout;
-for(ResourceBalance b : xmlDoc.balance_info)
-    {
-        // Inflate your row "template" and fill out the fields.
-        TableRow row = (TableRow)LayoutInflater.from(CheckBalanceActivity.this).inflate(R.layout.fragment_first, null);
-        ((TextView)row.findViewById(R.id.attrib_name)).setText(b.NAME);
-        ((TextView)row.findViewById(R.id.attrib_value)).setText(b.VALUE);
-        table.addView(row);
-    }
-table.requestLayout();
-*/
 
 }
