@@ -1,5 +1,6 @@
 package com.example.contiseparapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -25,12 +26,12 @@ import java.util.ArrayList;
 public class SecondFragment extends Fragment {
 
     private FragmentSecondBinding binding;
-    private ArrayList<Coppia> risultati;
+    //private ArrayList<Coppia> risultati;
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
@@ -74,7 +75,8 @@ public class SecondFragment extends Fragment {
 
                 if(!conto1.equals("")) {
                     Double conto = Double.parseDouble(conto1);
-                    risultati = GuestList.calcRes(conto);
+                    //risultati = GuestList.calcRes(conto);
+                    Results.calcRes(conto);
                     VisualizzaRisultati();
                 }
             }
@@ -96,22 +98,17 @@ public class SecondFragment extends Fragment {
         binding = null;
     }
 
+    @SuppressLint("SetTextI18n")
     public void VisualizzaRisultati(){
 
         TableLayout table = binding.tableLayout;
         table.removeAllViews();
         Double totMoney = 0.0;
 
-        for(Coppia c : risultati){
+        for(Coppia c : Results.getList()){
             //TableRow row = (TableRow)LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, null);
 
-            if(c.nome == "monetine: "){
-                TableRow rowblank = new TableRow(getActivity().getApplicationContext());
-                TextView textview0 = new TextView(getActivity().getApplicationContext());
-                textview0.setText("\n________________\n");
-                rowblank.addView(textview0);
-                table.addView(rowblank, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            }
+
             TableRow row = new TableRow(getActivity().getApplicationContext());
 
             TextView textview1 = new TextView(getActivity().getApplicationContext());
@@ -130,6 +127,26 @@ public class SecondFragment extends Fragment {
             //binding.attribName.setText(c.nome);
             //binding.attribValue.setText(String.valueOf(c.quota));
         }
+
+        //aggiungi monetine
+        TableRow rowblank0 = new TableRow(getActivity().getApplicationContext());
+        TextView textview00 = new TextView(getActivity().getApplicationContext());
+        textview00.setText("\n________________\n");
+        rowblank0.addView(textview00);
+        table.addView(rowblank0, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        TableRow row0 = new TableRow(getActivity().getApplicationContext());
+        TextView textview10 = new TextView(getActivity().getApplicationContext());
+        textview10.setText("monetine:");
+        textview10.setTextSize(20);
+        row0.addView(textview10);
+        TextView textview20 = new TextView(getActivity().getApplicationContext());
+        textview20.setText(df.format(Results.getMonetine())+" €");
+        totMoney += Results.getMonetine();
+        textview20.setTextSize(20);
+        row0.addView(textview20);
+        table.addView(row0, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
 
         //aggiungi riga del totale
         TableRow rowblank = new TableRow(getActivity().getApplicationContext());

@@ -29,7 +29,11 @@ public class Results{
         return results.size();
     }
 
-    public Results(Double conto){
+    public static ArrayList<Coppia> getList() {
+        return new ArrayList<Coppia>(results);
+    }
+
+    public static void calcRes(Double conto) {
 
         results = new ArrayList<Coppia>();
 
@@ -75,8 +79,6 @@ public class Results{
         monetine = totDecimal;
 
     }
-
-    //public static void calcRes(Double conto) {}
 
 
 }

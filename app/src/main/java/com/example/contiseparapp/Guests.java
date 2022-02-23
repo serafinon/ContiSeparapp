@@ -24,6 +24,9 @@ public class Guests {
         return guests.size();
     }
 
+    public static ArrayList<Coppia> getList() {
+        return new ArrayList<Coppia>(guests);
+    }
 
     public static Double calcSum(){
         Double sum= 0.0;

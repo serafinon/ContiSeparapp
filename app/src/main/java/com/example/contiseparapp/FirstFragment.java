@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-    private ArrayList<Coppia> a = GuestList.getGuests();
+    //private ArrayList<Coppia> a = GuestList.getGuests();
     private static final DecimalFormat df = new DecimalFormat("0.00");
     //private DialogAddGuest dag;
 
@@ -98,7 +98,7 @@ public class FirstFragment extends Fragment {
 
                         if(!nome.equals("") && !quota1.equals("")) {
                             Double quota = Double.parseDouble(quota1);
-                            a = GuestList.addGuest(nome, quota);
+                            Guests.addEl(nome,quota);
                             aggiornaTab();
                         }
                     }
@@ -130,7 +130,7 @@ public class FirstFragment extends Fragment {
         table.removeAllViews();
         Double totMoney = 0.0;
 
-        for(Coppia c : a){
+        for(Coppia c : Guests.getList()){
             //TableRow row = (TableRow)LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, null);
             TableRow row = new TableRow(getActivity().getApplicationContext());
 
