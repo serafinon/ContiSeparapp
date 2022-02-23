@@ -1,5 +1,6 @@
 package com.example.contiseparapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.contiseparapp.databinding.FragmentSecondBinding;
@@ -25,12 +27,12 @@ import java.util.ArrayList;
 public class SecondFragment extends Fragment {
 
     private FragmentSecondBinding binding;
-    private ArrayList<Coppia> risultati;
+    //private ArrayList<Coppia> risultati;
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater, ViewGroup container,
+            @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
 
@@ -41,14 +43,6 @@ public class SecondFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        /*binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
-            }
-        });*/
 
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
@@ -65,7 +59,6 @@ public class SecondFragment extends Fragment {
 
         builder.setView(layout);
 
-
         // Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -74,18 +67,11 @@ public class SecondFragment extends Fragment {
 
                 if(!conto1.equals("")) {
                     Double conto = Double.parseDouble(conto1);
-                    risultati = GuestList.calcRes(conto);
+                    Results.calcRes(conto);
                     VisualizzaRisultati();
                 }
             }
         });
-        /*builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });*/
-
 
         builder.show();
     }
@@ -101,56 +87,23 @@ public class SecondFragment extends Fragment {
         TableLayout table = binding.tableLayout;
         table.removeAllViews();
         Double totMoney = 0.0;
+        FragmentActivity fa = getActivity();
 
-        for(Coppia c : risultati){
-            //TableRow row = (TableRow)LayoutInflater.from(getContext()).inflate(R.layout.fragment_first, null);
-
-            if(c.nome == "monetine: "){
-                TableRow rowblank = new TableRow(getActivity().getApplicationContext());
-                TextView textview0 = new TextView(getActivity().getApplicationContext());
-                textview0.setText("\n________________\n");
-                rowblank.addView(textview0);
-                table.addView(rowblank, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            }
-            TableRow row = new TableRow(getActivity().getApplicationContext());
-
-            TextView textview1 = new TextView(getActivity().getApplicationContext());
-            textview1.setText(c.nome);
-            textview1.setTextSize(22);
-            row.addView(textview1);
-
-            TextView textview2 = new TextView(getActivity().getApplicationContext());
-            textview2.setText(df.format(c.quota)+" €");
+        for(Coppia c : Results.getList()){
+            Utility.aggiungiRigaTab(fa, table, c.nome, df.format(c.quota)+" €", 22);
             totMoney += c.quota;
-            textview2.setTextSize(22);
-            row.addView(textview2);
-
-            table.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-            //binding.attribName.setText(c.nome);
-            //binding.attribValue.setText(String.valueOf(c.quota));
         }
 
-        //aggiungi riga del totale
-        TableRow rowblank = new TableRow(getActivity().getApplicationContext());
-        TextView textview0 = new TextView(getActivity().getApplicationContext());
-        textview0.setText("\n________________\n\n");
-        rowblank.addView(textview0);
-        table.addView(rowblank, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        //aggiungi monetine
+        Utility.aggiungiRigaBlank(fa, table);
+        Utility.aggiungiRigaTab(fa, table, "monetine:", df.format(Results.getMonetine())+" €", 20);
+        totMoney += Results.getMonetine();
 
-        TableRow row = new TableRow(getActivity().getApplicationContext());
-        TextView textview1 = new TextView(getActivity().getApplicationContext());
-        textview1.setText("Tot.");
-        textview1.setTextSize(24);
-        row.addView(textview1);
-        TextView textview2 = new TextView(getActivity().getApplicationContext());
-        textview2.setText(df.format(totMoney)+" €");
-        textview2.setTextSize(24);
-        row.addView(textview2);
-        table.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        //aggiungi riga del totale
+        Utility.aggiungiRigaBlank(fa, table);
+        Utility.aggiungiRigaTab(fa, table, "Tot.", df.format(totMoney)+" €", 24);
 
         table.requestLayout();
-
 
     }
 
