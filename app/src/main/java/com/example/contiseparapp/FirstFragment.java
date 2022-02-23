@@ -60,14 +60,6 @@ public class FirstFragment extends Fragment {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-
-                /*Snackbar.make(view, "boh", Snackbar.LENGTH_LONG)
-                        .setAction("AddGuest", dag.show(binding., "tag"));*/
-
-                /*AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create(); //Read Update
-                alertDialog.setTitle("Quanto dovresti aver speso?");*/
 
                 LinearLayout layout = new LinearLayout(getContext());
                 layout.setOrientation(LinearLayout.VERTICAL);
