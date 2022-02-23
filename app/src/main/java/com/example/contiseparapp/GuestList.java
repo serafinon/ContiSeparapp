@@ -6,22 +6,22 @@ import java.util.ArrayList;
 public class GuestList {
 
     private static ArrayList<Coppia> guests = new ArrayList<Coppia>();
-    private static ArrayList<Coppia> results;
+    private static ArrayList<Coppia> results = new ArrayList<Coppia>();
 
 
     public static ArrayList<Coppia> addGuest(String nome, Double quota){
-
         Coppia coppia=new Coppia(nome,quota);
-
         guests.add(coppia);
-
         return guests;
-
+    }
+    public static ArrayList<Coppia> addResult(String nome, Double quota){
+        Coppia coppia=new Coppia(nome,quota);
+        results.add(coppia);
+        return results;
     }
 
     public static ArrayList<Coppia> calcRes(Double conto) {
 
-        results = new ArrayList<Coppia>();
         Double sum = calcSumGuests();
         Double differenza = conto - sum;
 
@@ -55,6 +55,7 @@ public class GuestList {
 
         System.out.println("conto = " + conto + "\nsum = " + sum + "\nriporto = " + riporto + "\ntotDecimal = " + TotDecimal);
 
+        //aggiorno i risultati
         for (int i=0;i<guests.size();i++) {
             Coppia c= new Coppia();
             c.nome = guests.get(i).nome;
