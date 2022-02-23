@@ -65,9 +65,6 @@ public class Results{
             totDecimal = Utility.round(totDecimal - ( 0.1 * Guests.getSize()) , 2 );
         }
 
-        //Double riportoIntero = riporto - riportoDecimal;
-        //Double TotDecimal = riportoDecimal * guests.size();
-
         System.out.println("conto = " + conto + "\nsum = " + sum + "\nriporto = " + riporto + "\ntotDecimal = " + totDecimal);
 
         //aggiorno i risultati
