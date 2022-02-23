@@ -140,7 +140,7 @@ public class SecondFragment extends Fragment {
 
         TableRow row = new TableRow(getActivity().getApplicationContext());
         TextView textview1 = new TextView(getActivity().getApplicationContext());
-        textview1.setText("Tot. = ");
+        textview1.setText("Tot.");
         textview1.setTextSize(24);
         row.addView(textview1);
         TextView textview2 = new TextView(getActivity().getApplicationContext());

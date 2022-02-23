@@ -23,12 +23,14 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.contiseparapp.databinding.FragmentFirstBinding;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
     private ArrayList<Coppia> a = GuestList.getGuests();
+    private static final DecimalFormat df = new DecimalFormat("0.00");
     //private DialogAddGuest dag;
 
     @Override
@@ -138,7 +140,7 @@ public class FirstFragment extends Fragment {
             row.addView(textview1);
 
             TextView textview2 = new TextView(getActivity().getApplicationContext());
-            textview2.setText(String.valueOf(c.quota)+" €");
+            textview2.setText(df.format(c.quota)+" €");
             totMoney += c.quota;
             textview2.setTextSize(22);
             row.addView(textview2);
@@ -158,11 +160,11 @@ public class FirstFragment extends Fragment {
 
         TableRow row = new TableRow(getActivity().getApplicationContext());
         TextView textview1 = new TextView(getActivity().getApplicationContext());
-        textview1.setText("Tot. = ");
+        textview1.setText("Tot.");
         textview1.setTextSize(24);
         row.addView(textview1);
         TextView textview2 = new TextView(getActivity().getApplicationContext());
-        textview2.setText(String.valueOf(totMoney)+" €");
+        textview2.setText(df.format(totMoney)+" €");
         textview2.setTextSize(24);
         row.addView(textview2);
         table.addView(row, new TableLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
